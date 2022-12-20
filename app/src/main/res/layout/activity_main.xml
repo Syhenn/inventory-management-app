@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="343dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:textSize="40sp"
+            android:textColor="#5e7974"
+            android:layout_margin="30sp"/>
+
+        <EditText
+            android:id="@+id/userMailId"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:padding="10sp"
+            android:background="@drawable/bordertextviewform"
+            android:textSize="18sp"
+            android:hint="Email"/>
+
+        <EditText
+            android:id="@+id/userPwdId"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:padding="10sp"
+            android:background="@drawable/bordertextviewform"
+            android:textSize="18sp"
+            android:hint="Password"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0sp"
+            android:text="You don't have an account ?" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:textStyle="bold"
+            android:text="Register here"
+            android:onClick="toRegisterClick"
+            android:clickable="true" />
+
+        <Button
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:background="@drawable/buttonsubmitform"
+            android:onClick="onLoginClick"
+            android:text="Login" />
+    </LinearLayout>
+
+</LinearLayout>
