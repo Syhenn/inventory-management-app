@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 
-class MainActivity : AppCompatActivity() {
+class Login : AppCompatActivity() {
 
     var userMail:EditText? = null
     var userPwd:EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.login)
 
         userMail = findViewById<View>(R.id.userMailId) as EditText
         userPwd = findViewById<View>(R.id.userPwdId) as EditText
