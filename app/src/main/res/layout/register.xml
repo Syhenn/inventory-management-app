@@ -69,6 +69,8 @@
             android:layout_margin="20sp"
             android:background="@drawable/buttonsubmitform"
             android:text="Register"
+            android:textColor="@color/white"
+            android:id="@+id/registerButton"
             android:onClick="buttonRegisterClicked"/>
     </LinearLayout>
 
