@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.room.Room
 import be.heh.projet_henquin.db.AppDatabase
 import be.heh.projet_henquin.db.user.User
+import be.heh.projet_henquin.db.user.UserDao
 import be.heh.projet_henquin.db.user.UserRecord
 
 
@@ -19,19 +20,24 @@ class Register : Activity(){
     private var textMail : EditText? = null
     private var textPassword : EditText? = null
     private var textRepassword : EditText? = null
+    private var db:AppDatabase?=null
+    private var dao: UserDao?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register)
-        /*
-        if(BuildConfig.DEBUG)
-            StrictMode.enableDefaults();*/
+
         this.textMail = findViewById<View>(R.id.user_mail) as EditText
         this.textPassword = findViewById<View>(R.id.user_password) as EditText
         this.textRepassword = findViewById<View>(R.id.user_repassword) as EditText
 
-        Log.i("test", "test")
+        this.db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "MyDataBase"
+        ).allowMainThreadQueries().build()
+        this.dao = db?.userDao()
+
 
     }
 
@@ -49,17 +55,28 @@ class Register : Activity(){
                 if(userPassword != userRepassword){
                     Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_LONG).show()
                 }else{
-                    val u = User(0, userMail, userPassword, false)
-                    val db = Room.databaseBuilder(
-                        applicationContext,
-                        AppDatabase::class.java, "MyDataBase"
-                    ).allowMainThreadQueries().build()
-                    val dao = db.userDao()
-                    val u1 = UserRecord(0, u.email, u.password,false)
-                    dao.insertUser(u1)
-                    Toast.makeText(this,"User has been successfully created.",Toast.LENGTH_LONG).show()
-                    val toMain = Intent(this, Main::class.java)
-                    startActivity(toMain)
+
+                    val userList = this.dao?.getAll()
+                    var userExist = false
+                    if (userList != null) {
+                        for(user in userList){
+                            if(user.email == userMail){
+                                userExist = true
+                            }
+                        }
+                    }
+                    if(userExist)Toast.makeText(this, "This account already exist.", Toast.LENGTH_LONG).show()
+                    else{
+                        val u = User(0, userMail, userPassword, false)
+                        val u1 = UserRecord(0, u.email, u.password,false)
+                        Log.i("User to create" , u1.toString())
+                        this.dao?.insertUser(u1)
+                        Toast.makeText(this,"User has been successfully created.",Toast.LENGTH_LONG).show()
+                        val toMain = Intent(this, Main::class.java)
+                        val intent = Main.newIntent(this, userMail)
+                        startActivity(intent)
+                    }
+
                 }
             }
 

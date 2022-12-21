@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.room.Room
 import be.heh.projet_henquin.db.AppDatabase
 import be.heh.projet_henquin.db.user.UserDao
+import be.heh.projet_henquin.db.user.UserRecord
 
 class Login : AppCompatActivity() {
 
@@ -34,6 +35,7 @@ class Login : AppCompatActivity() {
     fun onLoginClick(v : View){
         val userMail = this.textMail?.text.toString()
         val userPassword = this.textPassword?.text.toString()
+        val u1 = UserRecord(0, userMail, userPassword,false)
         if(userMail == "" || userPassword == ""){
             Toast.makeText(this, "Please complete all fields.", Toast.LENGTH_LONG).show()
         }else{
@@ -45,7 +47,8 @@ class Login : AppCompatActivity() {
                     if(user.email == userMail){
                         if(user.password == userPassword){
                             val toMain = Intent(this, Main::class.java)
-                            startActivity(toMain)
+                            val intent = Main.newIntent(this, userMail)
+                            startActivity(intent)
                         }else{
                             Toast.makeText(this, "Wrong password.", Toast.LENGTH_LONG).show()
                         }
