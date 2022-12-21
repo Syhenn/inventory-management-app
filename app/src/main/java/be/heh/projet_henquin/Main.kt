@@ -2,13 +2,12 @@ package be.heh.projet_henquin
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.room.Room
 import be.heh.projet_henquin.db.AppDatabase
-import be.heh.projet_henquin.db.UserRecord
+import be.heh.projet_henquin.db.user.UserRecord
 
 class Main : Activity() {
     private var userList : List<UserRecord> ?= null

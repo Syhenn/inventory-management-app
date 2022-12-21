@@ -8,16 +8,14 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.room.Room
 import be.heh.projet_henquin.db.AppDatabase
-import be.heh.projet_henquin.db.User
-import be.heh.projet_henquin.db.UserDao
-import be.heh.projet_henquin.db.UserRecord
+import be.heh.projet_henquin.db.user.UserDao
 
 class Login : AppCompatActivity() {
 
     private var textMail:EditText?=null
     private var textPassword:EditText?=null
     private var db:AppDatabase?=null
-    private var dao:UserDao?=null
+    private var dao: UserDao?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,19 +39,19 @@ class Login : AppCompatActivity() {
         }else{
 
             val userList = dao?.getAll()
-            val userEntry = UserRecord(0, userMail, userPassword)
-            if(userList!!.contains(userEntry)){
-                val user = dao?.findByEmail(userMail)
-                if(user!!.password == userPassword){
-                    val toMain = Intent(this, Main::class.java)
-                    startActivity(toMain)
-                }else{
-                    Toast.makeText(this, "Bad password.", Toast.LENGTH_LONG).show()
-                }
-            }else {
-                Toast.makeText(this, "This account don't exist.", Toast.LENGTH_LONG).show()
-            }
 
+            if (userList != null) {
+                for(user in userList){
+                    if(user.email == userMail){
+                        if(user.password == userPassword){
+                            val toMain = Intent(this, Main::class.java)
+                            startActivity(toMain)
+                        }else{
+                            Toast.makeText(this, "Wrong password.", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
 
         }
 

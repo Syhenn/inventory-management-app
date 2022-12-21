@@ -3,7 +3,6 @@ package be.heh.projet_henquin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -11,8 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.room.Room
 import be.heh.projet_henquin.db.AppDatabase
-import be.heh.projet_henquin.db.User
-import be.heh.projet_henquin.db.UserRecord
+import be.heh.projet_henquin.db.user.User
+import be.heh.projet_henquin.db.user.UserRecord
 
 
 class Register : Activity(){
@@ -50,13 +49,13 @@ class Register : Activity(){
                 if(userPassword != userRepassword){
                     Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_LONG).show()
                 }else{
-                    val u = User(0, userMail, userPassword )
+                    val u = User(0, userMail, userPassword, false)
                     val db = Room.databaseBuilder(
                         applicationContext,
                         AppDatabase::class.java, "MyDataBase"
                     ).allowMainThreadQueries().build()
                     val dao = db.userDao()
-                    val u1 = UserRecord(0, u.email, u.password,)
+                    val u1 = UserRecord(0, u.email, u.password,false)
                     dao.insertUser(u1)
                     Toast.makeText(this,"User has been successfully created.",Toast.LENGTH_LONG).show()
                     val toMain = Intent(this, Main::class.java)

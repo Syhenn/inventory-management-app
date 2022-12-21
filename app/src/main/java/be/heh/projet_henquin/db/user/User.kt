@@ -1,4 +1,4 @@
-package be.heh.projet_henquin.db
+package be.heh.projet_henquin.db.user
 
 class User(i : Int) {
     var id: Int = 0
@@ -10,12 +10,16 @@ class User(i : Int) {
     var password: String = "null"
         public get
         private set
+    var isAdmin: Boolean = false
+        public get
+        private set
 
 
-    constructor(id: Int, email: String, password: String, ) : this(id) {
+    constructor(id: Int, email: String, password: String, isAdmin: Boolean) : this(id) {
         this.id = id
         this.email = email
         this.password = password
+        this.isAdmin = isAdmin
     }
     override fun toString() : String {
         val sb = StringBuilder()

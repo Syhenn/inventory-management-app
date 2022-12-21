@@ -29,10 +29,11 @@
             android:padding="10sp"
             android:background="@drawable/bordertextviewform"
             android:textSize="18sp"
-            android:hint="Email"/>
+            android:hint="Email / pseudo"/>
 
         <EditText
             android:id="@+id/userPwdId"
+            android:inputType="textPassword"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"

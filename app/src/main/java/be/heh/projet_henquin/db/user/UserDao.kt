@@ -1,4 +1,4 @@
-package be.heh.projet_henquin.db
+package be.heh.projet_henquin.db.user
 
 import androidx.room.*
 
