@@ -55,26 +55,27 @@ class Register : Activity(){
                 if(userPassword != userRepassword){
                     Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_LONG).show()
                 }else{
-
-                    val userList = this.dao?.getAll()
-                    var userExist = false
-                    if (userList != null) {
-                        for(user in userList){
-                            if(user.email == userMail){
-                                userExist = true
+                    if(userPassword.length >= 4) {
+                        val userList = this.dao?.getAll()
+                        var userExist = false
+                        if (userList != null) {
+                            for(user in userList){
+                                if(user.email == userMail){
+                                    userExist = true
+                                }
                             }
                         }
-                    }
-                    if(userExist)Toast.makeText(this, "This account already exist.", Toast.LENGTH_LONG).show()
-                    else{
-                        val u = User(0, userMail, userPassword, false)
-                        val u1 = UserRecord(0, u.email, u.password,false)
-                        Log.i("User to create" , u1.toString())
-                        this.dao?.insertUser(u1)
-                        Toast.makeText(this,"User has been successfully created.",Toast.LENGTH_LONG).show()
-                        val toMain = Intent(this, Main::class.java)
-                        val intent = Main.newIntent(this, userMail)
-                        startActivity(intent)
+                        if(userExist)Toast.makeText(this, "This account already exist.", Toast.LENGTH_LONG).show()
+                        else{
+                            val u = User(0, userMail, userPassword, false)
+                            val u1 = UserRecord(0, u.email, u.password,true)
+                            this.dao?.insertUser(u1)
+                            Toast.makeText(this,"User has been successfully created.",Toast.LENGTH_LONG).show()
+                            val intent = Main.newIntent(this, userMail)
+                            startActivity(intent)
+                        }
+                    }else{
+                        Toast.makeText(this,"Password must contain more than 4 characters.",Toast.LENGTH_LONG).show()
                     }
 
                 }

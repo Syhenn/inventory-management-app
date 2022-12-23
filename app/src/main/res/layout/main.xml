@@ -14,22 +14,37 @@
         <Button
             android:layout_width="150sp"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
+            android:layout_margin="10sp"
             android:background="@drawable/buttonsubmitform"
             android:text="Add Material"
             android:textColor="@color/white"
             android:onClick="toAddMaterial"/>
         <TextView
             android:id="@+id/userMail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="User"
             android:gravity="center"/>
+        <Button
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:background="@drawable/buttonsubmitform"
+            android:text="UserList"
+            android:visibility="invisible"
+            android:clickable="false"
+            android:textColor="@color/white"
+            android:id="@+id/userListButton"
+            android:onClick="toUserList"/>
 
     </LinearLayout>
-    <ListView
-        android:id="@+id/userListView"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/materialView"
+        android:layout_margin="20sp"
+        android:background="#858585">
 
+    </LinearLayout>
 </LinearLayout>

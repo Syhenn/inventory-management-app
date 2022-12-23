@@ -31,7 +31,6 @@
 
         <EditText
             android:id="@+id/model"
-            android:inputType="textPassword"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
@@ -41,7 +40,6 @@
             android:hint="Model"/>
         <EditText
             android:id="@+id/ref"
-            android:inputType="textPassword"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
@@ -51,7 +49,6 @@
             android:hint="ref"/>
         <EditText
             android:id="@+id/link"
-            android:inputType="textPassword"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
