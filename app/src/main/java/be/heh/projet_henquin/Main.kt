@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.room.Room
@@ -40,7 +41,8 @@ class Main: Activity() {
 
 
         Log.i("User information", this.user.toString())
-        //Affichage de la liste utilisateur pour l'admin
+        
+        //User list for admin
         if(user?.isAdmin == true){
             val params: LinearLayout.LayoutParams = userListButton!!.getLayoutParams() as LinearLayout.LayoutParams
             userListButton!!.setLayoutParams(params)
@@ -50,9 +52,8 @@ class Main: Activity() {
         }
 
         materialList = materialDao?.getAll()
-        for(material in materialList!!){
-            this.materialView(material)
-        }
+        materialList?.let { materialView(it) }
+
         Log.i("Material list :", materialList.toString())
 
 
@@ -76,38 +77,12 @@ class Main: Activity() {
         this.materialDao = db?.materialDao()
 
     }
-    fun materialView(materialRecord: MaterialRecord){
-        /*
-        linearLayout = findViewById(R.id.materialView);
-        var materialView = MaterialComponent(
-            this,
-            null,
-            materialRecord.type,
-            materialRecord.model,
-            materialRecord.ref,
-            materialRecord.link
-        )
-        with(linearLayout) {
-            this?.addView(materialView)
-        }
+    fun materialView(materialList:List<MaterialRecord>){
 
-         */
+        var mListView = findViewById<ListView>(R.id.listMaterialItem)
+        var arrayAdapter: ArrayAdapter<*>
+        mListView.adapter = MaterialListAdapter(this, materialList as ArrayList<MaterialRecord>)
 
-        linearLayout = findViewById(R.id.materialView);
-        val typeView = TextView(this)
-        val modelView = TextView(this)
-        val refView = TextView(this)
-        val linkView = TextView(this)
-        with(linearLayout) {
-            typeView.setText("Type : " + materialRecord.type);
-            modelView.setText("Model : " + materialRecord.model);
-            refView.setText("Ref : " + materialRecord.ref);
-            linkView.setText("Link : " + materialRecord.link);
-            this?.addView(typeView)
-            this?.addView(modelView)
-            this?.addView(refView)
-            this?.addView(linkView)
-        }
     }
     companion object {
 

@@ -43,8 +43,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/materialView"
-        android:layout_margin="20sp"
-        android:background="#858585">
+        android:layout_margin="20sp">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listMaterialItem"
+        tools:listitem="@layout/materialcomponent"/>
 
     </LinearLayout>
 </LinearLayout>

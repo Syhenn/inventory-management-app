@@ -43,9 +43,9 @@ class AddMaterial : Activity (){
     }
     fun addMaterialClicked(v : View){
         val materialType = this.textType?.text.toString()
-        val materialModel = this.textType?.text.toString()
-        val materialRef = this.textType?.text.toString()
-        val materialLink = this.textType?.text.toString()
+        val materialModel = this.textModel?.text.toString()
+        val materialRef = this.textRef?.text.toString()
+        val materialLink = this.textLink?.text.toString()
 
         if(materialType == "" || materialModel == "" || materialRef == "" || materialLink == ""){
             Toast.makeText(this, "Please complete all fields.", Toast.LENGTH_LONG).show()

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="MaterialTextComponent">
-        <attr name="typeText" format="string"/>
-        <attr name="modelText" format="string"/>
-        <attr name="refText" format="string"/>
-        <attr name="linkText" format="string"/>
-    </declare-styleable>
-</resources>
