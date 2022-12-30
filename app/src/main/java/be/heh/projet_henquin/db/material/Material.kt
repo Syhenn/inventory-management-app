@@ -1,5 +1,7 @@
 package be.heh.projet_henquin.db.material
 
+import android.graphics.Bitmap
+
 class Material(i : Int){
         var id: Int = 0
             public get
@@ -16,17 +18,23 @@ class Material(i : Int){
         var link: String = "null"
             public get
             private set
+        var qrCode: ByteArray ?= null
+            public get
+            private set
         var createdBy: String = "null"
             public get
             private set
 
-        constructor(id: Int, type: String, model: String, ref: String, link: String, createdBy: String) : this(id) {
+        constructor(
+            id: Int, type: String, model: String, ref: String, link: String, qrCode: ByteArray,
+            createdBy: String) : this(id) {
             this.id = id
             this.type = type
             this.model = model
             this.ref = ref
             this.link = link
             this.createdBy = createdBy
+            this.qrCode = qrCode
         }
         override fun toString() : String {
             val sb = StringBuilder()

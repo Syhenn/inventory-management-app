@@ -3,6 +3,8 @@ package be.heh.projet_henquin
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +19,9 @@ import android.widget.LinearLayout
 import be.heh.projet_henquin.db.material.MaterialDao
 import be.heh.projet_henquin.db.material.MaterialRecord
 import android.widget.TextView
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.QRCodeWriter
 
 
 class Main: Activity() {
@@ -53,13 +58,16 @@ class Main: Activity() {
 
         materialList = materialDao?.getAll()
         materialList?.let { materialView(it) }
-
         Log.i("Material list :", materialList.toString())
 
 
     }
 
     fun toAddMaterial(v : View) {
+        val toAddMaterial = AddMaterial.addMaterialIntent(this, INTENT_USER_MAIL.toString())
+        startActivity(toAddMaterial)
+    }
+    fun toScanMaterial(v : View) {
         val toAddMaterial = AddMaterial.addMaterialIntent(this, INTENT_USER_MAIL.toString())
         startActivity(toAddMaterial)
     }
@@ -80,7 +88,6 @@ class Main: Activity() {
     fun materialView(materialList:List<MaterialRecord>){
 
         var mListView = findViewById<ListView>(R.id.listMaterialItem)
-        var arrayAdapter: ArrayAdapter<*>
         mListView.adapter = MaterialListAdapter(this, materialList as ArrayList<MaterialRecord>)
 
     }
