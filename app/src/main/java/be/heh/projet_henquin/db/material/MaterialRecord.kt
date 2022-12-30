@@ -11,5 +11,6 @@ data class MaterialRecord(
     @ColumnInfo(name = "ref") var ref: String,
     @ColumnInfo(name = "link") var link: String,
     @ColumnInfo(name="qrCode") var qrCode: ByteArray,
+    @ColumnInfo(name="isAvailable") var isAvailable: Boolean,
     @ColumnInfo(name = "createdBy") var createdBy: String
 )

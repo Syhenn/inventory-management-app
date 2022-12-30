@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    tools:context=".materialPage.ScanMaterial">
+    <EditText
+        android:id="@+id/materialRef"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:padding="10sp"
+        android:background="@drawable/bordertextviewform"
+        android:textSize="18sp"
+        android:hint="Material reference"/>
+    <Button
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:background="@drawable/buttonsubmitform"
+        android:text="Use material"
+        android:textColor="@color/white"
+        android:onClick="useMaterial"/>
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package be.heh.projet_henquin
+package be.heh.projet_henquin.materialPage
 
 import android.app.Activity
 import android.content.Context
@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.room.Room
+import be.heh.projet_henquin.Main
+import be.heh.projet_henquin.R
 import be.heh.projet_henquin.db.AppDatabase
 import be.heh.projet_henquin.db.material.Material
 import be.heh.projet_henquin.db.material.MaterialDao
@@ -58,23 +60,20 @@ class AddMaterial : Activity (){
             val outputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             val imageBytes = outputStream.toByteArray()
-            val m = Material(0, materialType, materialModel, materialRef, materialLink, imageBytes ,INTENT_USER_MAIL.toString())
-            val m1 = MaterialRecord(0, m.type, m.model, m.ref, m.link,imageBytes ,m.createdBy)
+            val m = Material(0, materialType, materialModel, materialRef, materialLink,imageBytes , true,
+                INTENT_USER_MAIL.toString())
+            val m1 = MaterialRecord(0, m.type, m.model, m.ref, m.link,imageBytes ,m.isAvailable,m.createdBy)
             this.dao?.insertMaterial(m1)
             Toast.makeText(this, "Material created with success.", Toast.LENGTH_LONG).show()
             val intent = Main.newIntent(this, INTENT_USER_MAIL.toString())
             startActivity(intent)
-
-
         }
-
     }
     fun image_view_qr_code(ref : String): Bitmap {
         val data = ref
         val qrCodeWriter = QRCodeWriter()
-        val bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 500, 500)
+        val bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 400, 400)
         val bitmap = toBitmap(bitMatrix)
-        //view.setImageBitmap(bitmap)
         return bitmap
     }
     private fun toBitmap(matrix: BitMatrix): Bitmap {
@@ -98,7 +97,7 @@ class AddMaterial : Activity (){
         fun addMaterialIntent(context: Context, userMail: String): Intent {
             val intent = Intent(context, AddMaterial::class.java)
             intent.putExtra(INTENT_USER_MAIL, userMail)
-            this.INTENT_USER_MAIL = userMail
+            INTENT_USER_MAIL = userMail
             return intent
         }
     }

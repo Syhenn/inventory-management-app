@@ -27,15 +27,23 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
-            android:name=".AddMaterial"
+            android:name=".materialPage.AddMaterial"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ScanMaterial"
+            android:name=".materialPage.ScanMaterial"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".materialPage.MaterialDetail"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

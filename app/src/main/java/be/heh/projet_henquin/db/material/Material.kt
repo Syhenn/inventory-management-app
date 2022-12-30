@@ -21,12 +21,15 @@ class Material(i : Int){
         var qrCode: ByteArray ?= null
             public get
             private set
+        var isAvailable: Boolean = true
+            public get
+            private set
         var createdBy: String = "null"
             public get
             private set
 
         constructor(
-            id: Int, type: String, model: String, ref: String, link: String, qrCode: ByteArray,
+            id: Int, type: String, model: String, ref: String, link: String, qrCode: ByteArray, isAvailable : Boolean,
             createdBy: String) : this(id) {
             this.id = id
             this.type = type
@@ -34,6 +37,7 @@ class Material(i : Int){
             this.ref = ref
             this.link = link
             this.createdBy = createdBy
+            this.isAvailable = isAvailable
             this.qrCode = qrCode
         }
         override fun toString() : String {
