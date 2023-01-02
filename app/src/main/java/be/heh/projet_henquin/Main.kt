@@ -56,7 +56,7 @@ class Main: Activity() {
         }
 
         materialList = materialDao?.getAll()
-        materialList?.let { materialView(it) }
+        materialList?.let { user?.let { it1 -> materialView(it, it1) } }
         Log.i("Material list :", materialList.toString())
 
 
@@ -84,23 +84,19 @@ class Main: Activity() {
         this.materialDao = db?.materialDao()
 
     }
-    fun materialView(materialList:List<MaterialRecord>){
+    fun materialView(materialList:List<MaterialRecord>, user : UserRecord){
         var mListView = findViewById<ListView>(R.id.listMaterialItem)
         mListView.isClickable = true
         mListView.adapter = MaterialListAdapter(this, materialList as ArrayList<MaterialRecord>)
         mListView.setOnItemClickListener { adapterView, view, position, l ->
-            val ref = adapterView.text_ref.text
-            val qrCode = adapterView.image_view_qr_code
-            val toMaterialDetail = MaterialDetail.newIntent(this, ref.toString())
+            val toMaterialDetail = MaterialDetail.newIntent(this, ref.toString(), user.email)
             startActivity(toMaterialDetail)
 
         }
 
     }
     companion object {
-
         private var INTENT_USER_MAIL : String ?= null
-
         fun newIntent(context: Context, userMail: String): Intent {
             val intent = Intent(context, Main::class.java)
             intent.putExtra(INTENT_USER_MAIL, userMail)

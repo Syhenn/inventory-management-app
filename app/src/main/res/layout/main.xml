@@ -40,7 +40,7 @@
             android:layout_margin="10sp"
             android:background="@drawable/buttonsubmitform"
             android:text="UserList"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:clickable="false"
             android:textColor="@color/white"
             android:id="@+id/userListButton"
