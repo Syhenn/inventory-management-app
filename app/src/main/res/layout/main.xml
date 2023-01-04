@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:background="@drawable/buttonsubmitform"
-            android:text="Add Material"
+            android:text="Nouveau matériel"
             android:textColor="@color/white"
             android:onClick="toAddMaterial"/>
         <Button
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:background="@drawable/buttonsubmitform"
-            android:text="Scan Material"
+            android:text="Scanner"
             android:textColor="@color/white"
             android:onClick="toScanMaterial"/>
         <Button
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:background="@drawable/buttonsubmitform"
-            android:text="UserList"
+            android:text="Liste d'utilisateur"
             android:visibility="gone"
             android:clickable="false"
             android:textColor="@color/white"

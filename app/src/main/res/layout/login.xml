@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LOGIN"
+            android:text="CONNEXION"
             android:textSize="40sp"
             android:textColor="#5e7974"
             android:layout_margin="30sp"/>
@@ -40,18 +40,18 @@
             android:padding="10sp"
             android:background="@drawable/bordertextviewform"
             android:textSize="18sp"
-            android:hint="Password"/>
+            android:hint="Mot de passe"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="0sp"
-            android:text="You don't have an account ?" />
+            android:text="Tu n'as pas de compte ?" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
             android:textStyle="bold"
-            android:text="Register here"
+            android:text="S'enregistrer ici"
             android:onClick="toRegisterClick"
             android:clickable="true" />
 
@@ -61,7 +61,7 @@
             android:layout_margin="20sp"
             android:background="@drawable/buttonsubmitform"
             android:onClick="onLoginClick"
-            android:text="Login" />
+            android:text="Connexion" />
     </LinearLayout>
 
 </LinearLayout>

@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REGISTER"
+            android:text="INSCRIPTION"
             android:textSize="40sp"
             android:textColor="#5e7974"
             android:layout_margin="30sp"/>
@@ -40,7 +40,7 @@
             android:padding="10sp"
             android:background="@drawable/bordertextviewform"
             android:textSize="18sp"
-            android:hint="Password"/>
+            android:hint="Mot de passe"/>
         <EditText
             android:id="@+id/user_repassword"
             android:inputType="textPassword"
@@ -50,17 +50,17 @@
             android:padding="10sp"
             android:background="@drawable/bordertextviewform"
             android:textSize="18sp"
-            android:hint="Repassword"/>
+            android:hint="Retapez le mot de passe"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="0sp"
-            android:text="You have already an acount ?" />
+            android:text="Tu as déjà un compte ?" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-            android:text="Login here"
+            android:text="Se connecter ici"
             android:onClick="toLoginClick"
             android:clickable="true"
             android:textStyle="bold"/>
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
             android:background="@drawable/buttonsubmitform"
-            android:text="Register"
+            android:text="S'enregistrer"
             android:textColor="@color/white"
             android:id="@+id/registerButton"
             android:onClick="buttonRegisterClicked"/>

@@ -14,10 +14,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Material"
+            android:text="Ajout du matériel"
             android:textSize="40sp"
             android:textColor="#5e7974"
-            android:layout_margin="30sp"/>
+            android:layout_marginBottom="30sp"/>
 
         <EditText
             android:id="@+id/type"
@@ -46,7 +46,7 @@
             android:padding="10sp"
             android:background="@drawable/bordertextviewform"
             android:textSize="18sp"
-            android:hint="ref"/>
+            android:hint="Référence"/>
         <EditText
             android:id="@+id/link"
             android:layout_width="300sp"
@@ -55,13 +55,13 @@
             android:padding="10sp"
             android:background="@drawable/bordertextviewform"
             android:textSize="18sp"
-            android:hint="link"/>
+            android:hint="Lien"/>
         <Button
             android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
             android:background="@drawable/buttonsubmitform"
-            android:text="Add"
+            android:text="Ajouter"
             android:textColor="@color/white"
             android:id="@+id/addMaterialButton"
             android:onClick="addMaterialClicked"/>

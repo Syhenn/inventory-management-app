@@ -15,13 +15,13 @@
         android:padding="10sp"
         android:background="@drawable/bordertextviewform"
         android:textSize="18sp"
-        android:hint="Material reference"/>
+        android:hint="Référence du matériel"/>
     <Button
         android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:background="@drawable/buttonsubmitform"
-        android:text="Use material"
+        android:text="Utiliser"
         android:textColor="@color/white"
         android:onClick="useMaterial"/>
 

@@ -29,10 +29,10 @@ class MaterialListAdapter(private val context : Activity, private val materials:
         text_ref.text = material.ref
         if(material.isAvailable){
             text_available!!.setTextColor(Color.GREEN)
-            text_available.text = "Available"
+            text_available.text = "Disponible"
         }
         else{
-            text_available.text = "Not available"
+            text_available.text = "Indisponible"
             text_available!!.setTextColor(Color.RED)
         }
         val bitmap = BitmapFactory.decodeByteArray(material.qrCode, 0, material.qrCode.size)
