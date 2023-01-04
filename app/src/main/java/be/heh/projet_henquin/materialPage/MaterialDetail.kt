@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.media.Image
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -60,7 +61,7 @@ class MaterialDetail : Activity() {
         modifyButton = findViewById(R.id.modifyButtonId) as Button
         deleteButton = findViewById(R.id.deleteButtonId) as Button
         validateButton = findViewById(R.id.validateButtonId) as Button
-        textIsAvailable = findViewById(R.id.text_isAvailable) as TextView
+        textIsAvailable = findViewById<View>(R.id.text_isAvailable) as TextView
         typeEdit = findViewById(R.id.type) as EditText
         modelEdit = findViewById(R.id.model) as EditText
         refEdit = findViewById(R.id.ref) as EditText
@@ -79,6 +80,15 @@ class MaterialDetail : Activity() {
         textModel!!.setText(material?.model )
         textType!!.setText(material?.type )
         textLink!!.setText(material?.link )
+        if(material?.isAvailable == true){
+            textIsAvailable!!.setText("Available")
+            textIsAvailable!!.setTextColor(Color.GREEN)
+        } else {
+            textIsAvailable!!.setText("Not Available")
+            textIsAvailable!!.setTextColor(Color.RED)
+        }
+
+        textIsAvailable!!.setText(material?.isAvailable.toString())
         val bitmap = material?.qrCode?.let { BitmapFactory.decodeByteArray(it  , 0, it.size) }
         qrCodeImg!!.setImageBitmap(bitmap)
 
@@ -95,21 +105,26 @@ class MaterialDetail : Activity() {
 
     }
     fun modifyButton(v : View){
+        typeEdit?.setText(textType!!.text)
         typeEdit?.setVisibility(View.VISIBLE)
         textType?.setVisibility(View.GONE)
+        modelEdit?.setText(textModel!!.text)
         modelEdit?.setVisibility(View.VISIBLE)
         textModel?.setVisibility(View.GONE)
+        refEdit?.setText(textRef!!.text)
         refEdit?.setVisibility(View.VISIBLE)
         textRef?.setVisibility(View.GONE)
+        linkEdit?.setText(textLink!!.text)
         linkEdit?.setVisibility(View.VISIBLE)
         textLink?.setVisibility(View.GONE)
         textIsAvailable?.setVisibility(View.GONE)
+        modifyButton?.setVisibility(View.GONE)
         val params: LinearLayout.LayoutParams = validateButton!!.getLayoutParams() as LinearLayout.LayoutParams
         validateButton!!.setLayoutParams(params)
         params.width = 470
         validateButton!!.setVisibility(View.VISIBLE)
         validateButton!!.setClickable(true)
-        typeEdit?.text ?: textType?.text.toString()
+
     }
 
     fun validateButton(v : View){
@@ -124,7 +139,7 @@ class MaterialDetail : Activity() {
         val imageBytes = outputStream.toByteArray()
         var materialUpdated = material?.let { MaterialRecord(it.id,materialType, materialModel, materialRef, materialLink, imageBytes, material!!.isAvailable, material!!.createdBy) }
         materialUpdated?.let { this.materialDao?.updateMaterial(it) }
-        Toast.makeText(this, "Material created with success.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Material modified with success.", Toast.LENGTH_LONG).show()
         val intent = Main.newIntent(this, intent_mail.toString())
         startActivity(intent)
     }
