@@ -33,7 +33,6 @@ class Main: Activity() {
     private var userDao: UserDao?=null
     private var materialDao : MaterialDao?= null
     private var materialList : List<MaterialRecord>?= null
-    private var mList : List<Material> ?= null
     private var linearLayout : LinearLayout ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,19 +84,14 @@ class Main: Activity() {
     }
     fun materialView(materialRecordList:List<MaterialRecord>){
         var mListView = findViewById<ListView>(R.id.listMaterialItem)
-        for(i in materialRecordList){
-            val m = Material(i.id, i.type, i.model, i.ref, i.link, i.qrCode, i.createdBy)
-        }
-
         mListView.isClickable = true
         mListView.adapter = MaterialListAdapter(this, materialRecordList as ArrayList<MaterialRecord>)
         mListView.setOnItemClickListener { adapterView, view, position, l ->
-            val selectedItem = mListView.adapter.getItem(position)
-            Log.i("item", selectedItem.toString())
-            Toast.makeText(this, "Vous avez sélectionné : ${selectedItem.toString()}", Toast.LENGTH_SHORT).show()
-            /*
-            val toMaterialDetail = MaterialDetail.newIntent(this, selectedItem.ref, user.email)
-            startActivity(toMaterialDetail)*/
+            var selectedItem : MaterialRecord ?= null
+            selectedItem = mListView.adapter.getItem(position) as MaterialRecord
+
+            val toMaterialDetail = user?.let { MaterialDetail.newIntent(this, selectedItem.ref, it.email) }
+            startActivity(toMaterialDetail)
 
         }
 
