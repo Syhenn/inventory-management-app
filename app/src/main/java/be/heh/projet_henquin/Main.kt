@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import be.heh.projet_henquin.db.material.MaterialDao
 import be.heh.projet_henquin.db.material.MaterialRecord
 import android.widget.TextView
+import be.heh.projet_henquin.db.material.Material
 import be.heh.projet_henquin.materialPage.AddMaterial
 import be.heh.projet_henquin.materialPage.MaterialDetail
 import be.heh.projet_henquin.materialPage.MaterialListAdapter
@@ -32,6 +33,7 @@ class Main: Activity() {
     private var userDao: UserDao?=null
     private var materialDao : MaterialDao?= null
     private var materialList : List<MaterialRecord>?= null
+    private var mList : List<Material> ?= null
     private var linearLayout : LinearLayout ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +47,6 @@ class Main: Activity() {
         this.user = INTENT_USER_MAIL?.let { this.userDao?.findByEmail(it) }
 
         Log.i("User information", this.user.toString())
-        
         //User list for admin
         if(user?.isAdmin == true){
             val params: LinearLayout.LayoutParams = userListButton!!.getLayoutParams() as LinearLayout.LayoutParams
@@ -56,9 +57,7 @@ class Main: Activity() {
         }
 
         materialList = materialDao?.getAll()
-        materialList?.let { user?.let { it1 -> materialView(it, it1) } }
-        Log.i("Material list :", materialList.toString())
-
+        materialList?.let { materialView(it) }
 
     }
 
@@ -84,17 +83,26 @@ class Main: Activity() {
         this.materialDao = db?.materialDao()
 
     }
-    fun materialView(materialList:List<MaterialRecord>, user : UserRecord){
+    fun materialView(materialRecordList:List<MaterialRecord>){
         var mListView = findViewById<ListView>(R.id.listMaterialItem)
+        for(i in materialRecordList){
+            val m = Material(i.id, i.type, i.model, i.ref, i.link, i.qrCode, i.createdBy)
+        }
+
         mListView.isClickable = true
-        mListView.adapter = MaterialListAdapter(this, materialList as ArrayList<MaterialRecord>)
+        mListView.adapter = MaterialListAdapter(this, materialRecordList as ArrayList<MaterialRecord>)
         mListView.setOnItemClickListener { adapterView, view, position, l ->
-            val toMaterialDetail = MaterialDetail.newIntent(this, ref.toString(), user.email)
-            startActivity(toMaterialDetail)
+            val selectedItem = mListView.adapter.getItem(position)
+            Log.i("item", selectedItem.toString())
+            Toast.makeText(this, "Vous avez sélectionné : ${selectedItem.toString()}", Toast.LENGTH_SHORT).show()
+            /*
+            val toMaterialDetail = MaterialDetail.newIntent(this, selectedItem.ref, user.email)
+            startActivity(toMaterialDetail)*/
 
         }
 
     }
+
     companion object {
         private var INTENT_USER_MAIL : String ?= null
         fun newIntent(context: Context, userMail: String): Intent {

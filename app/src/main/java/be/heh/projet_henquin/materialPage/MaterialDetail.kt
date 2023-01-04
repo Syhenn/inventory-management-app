@@ -113,6 +113,7 @@ class MaterialDetail : Activity() {
     }
 
     fun validateButton(v : View){
+
         val materialType = this.typeEdit?.text.toString()
         val materialModel = this.modelEdit?.text.toString()
         val materialRef = this.refEdit?.text.toString()
