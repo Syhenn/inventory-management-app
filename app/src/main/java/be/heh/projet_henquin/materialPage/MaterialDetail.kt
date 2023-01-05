@@ -73,6 +73,7 @@ class MaterialDetail : Activity() {
         textModel!!.text = material?.model
         textType!!.text = material?.type
         textLink!!.text = material?.link
+        textLink!!.setTextColor(Color.BLUE)
         if (material?.isAvailable == true) {
             textIsAvailable!!.text = "Disponible"
             textIsAvailable!!.setTextColor(Color.GREEN)
@@ -81,7 +82,6 @@ class MaterialDetail : Activity() {
             textIsAvailable!!.setTextColor(Color.RED)
         }
 
-        textIsAvailable!!.text = material?.isAvailable.toString()
         val bitmap = material?.qrCode?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
         qrCodeImg!!.setImageBitmap(bitmap)
 

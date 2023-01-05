@@ -42,7 +42,7 @@ class ScanMaterial : AppCompatActivity() {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents == null) {
-                Toast.makeText(this, "Manual", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Scan manuel", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Data : ${result.contents}", Toast.LENGTH_LONG).show()
                 val ref = result.contents
