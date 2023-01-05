@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -22,13 +21,13 @@ import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import java.io.ByteArrayOutputStream
 
-class AddMaterial : Activity (){
-    private var textType : EditText? = null
-    private var textModel : EditText? = null
-    private var textRef : EditText? = null
-    private var textLink : EditText? = null
-    private var db: AppDatabase?=null
-    private var dao: MaterialDao?=null
+class AddMaterial : Activity() {
+    private var textType: EditText? = null
+    private var textModel: EditText? = null
+    private var textRef: EditText? = null
+    private var textLink: EditText? = null
+    private var db: AppDatabase? = null
+    private var dao: MaterialDao? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,38 +43,51 @@ class AddMaterial : Activity (){
             AppDatabase::class.java, "MyDataBase"
         ).allowMainThreadQueries().build()
         this.dao = db?.materialDao()
-        Log.i("User Mail : ", INTENT_USER_MAIL.toString())
 
     }
-    fun addMaterialClicked(v : View){
+
+    fun addMaterialClicked(v: View) {
         val materialType = this.textType?.text.toString()
         val materialModel = this.textModel?.text.toString()
         val materialRef = this.textRef?.text.toString()
         val materialLink = this.textLink?.text.toString()
 
-        if(materialType == "" || materialModel == "" || materialRef == "" || materialLink == ""){
-            Toast.makeText(this, "Please complete all fields.", Toast.LENGTH_LONG).show()
-        }else {
+        if (materialType == "" || materialModel == "" || materialRef == "" || materialLink == "") {
+            Toast.makeText(this, "Veuillez remplir tous les champs.", Toast.LENGTH_LONG).show()
+        } else {
             val bitmap = image_view_qr_code(materialRef)
             val outputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             val imageBytes = outputStream.toByteArray()
-            val m = Material(0, materialType, materialModel, materialRef, materialLink,imageBytes , true,
-                INTENT_USER_MAIL.toString())
-            val m1 = MaterialRecord(0, m.type, m.model, m.ref, m.link,imageBytes ,m.isAvailable,m.createdBy)
+            val m = Material(
+                0, materialType, materialModel, materialRef, materialLink, imageBytes, true,
+                INTENT_USER_MAIL.toString()
+            )
+            val m1 = MaterialRecord(
+                0,
+                m.type,
+                m.model,
+                m.ref,
+                m.link,
+                imageBytes,
+                m.isAvailable,
+                m.createdBy
+            )
             this.dao?.insertMaterial(m1)
-            Toast.makeText(this, "Material created with success.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Matériel crée avec succés.", Toast.LENGTH_LONG).show()
             val intent = Main.newIntent(this, INTENT_USER_MAIL.toString())
             startActivity(intent)
         }
     }
-    fun image_view_qr_code(ref : String): Bitmap {
+
+    fun image_view_qr_code(ref: String): Bitmap {
         val data = ref
         val qrCodeWriter = QRCodeWriter()
         val bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 400, 400)
         val bitmap = toBitmap(bitMatrix)
         return bitmap
     }
+
     private fun toBitmap(matrix: BitMatrix): Bitmap {
         val height = matrix.height
         val width = matrix.width
@@ -90,9 +102,10 @@ class AddMaterial : Activity (){
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
     }
+
     companion object {
 
-        private var INTENT_USER_MAIL : String ?= null
+        private var INTENT_USER_MAIL: String? = null
 
         fun addMaterialIntent(context: Context, userMail: String): Intent {
             val intent = Intent(context, AddMaterial::class.java)

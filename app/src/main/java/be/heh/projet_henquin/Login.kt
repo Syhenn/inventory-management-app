@@ -13,10 +13,10 @@ import be.heh.projet_henquin.db.user.UserRecord
 
 class Login : AppCompatActivity() {
 
-    private var textMail:EditText?=null
-    private var textPassword:EditText?=null
-    private var db:AppDatabase?=null
-    private var dao: UserDao?=null
+    private var textMail: EditText? = null
+    private var textPassword: EditText? = null
+    private var db: AppDatabase? = null
+    private var dao: UserDao? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +32,25 @@ class Login : AppCompatActivity() {
 
     }
 
-    fun onLoginClick(v : View){
+    //Pour se login
+    fun onLoginClick(v: View) {
         val userMail = this.textMail?.text.toString()
         val userPassword = this.textPassword?.text.toString()
-        val u1 = UserRecord(0, userMail, userPassword,false)
-        if(userMail == "" || userPassword == ""){
-            Toast.makeText(this, "Please complete all fields.", Toast.LENGTH_LONG).show()
-        }else{
+        if (userMail == "" || userPassword == "") {
+            Toast.makeText(this, "Veuillez remplir tous les champs.", Toast.LENGTH_LONG).show()
+        } else {
 
             val userList = dao?.getAll()
 
             if (userList != null) {
-                for(user in userList){
-                    if(user.email == userMail){
-                        if(user.password == userPassword){
-                            val toMain = Intent(this, Main::class.java)
+                for (user in userList) {
+                    if (user.email == userMail) {
+                        if (user.password == userPassword) {
                             val intent = Main.newIntent(this, userMail)
                             startActivity(intent)
-                        }else{
-                            Toast.makeText(this, "Wrong password.", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this, "Mot de passe incorrect.", Toast.LENGTH_LONG)
+                                .show()
                         }
                     }
                 }
@@ -60,7 +60,8 @@ class Login : AppCompatActivity() {
 
     }
 
-    fun toRegisterClick(v : View){
+    //Vers le Register
+    fun toRegisterClick(v: View) {
         val toRegisterActivity = Intent(this, Register::class.java)
         startActivity(toRegisterActivity)
     }

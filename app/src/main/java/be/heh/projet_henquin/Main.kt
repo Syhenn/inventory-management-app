@@ -16,24 +16,21 @@ import android.widget.LinearLayout
 import be.heh.projet_henquin.db.material.MaterialDao
 import be.heh.projet_henquin.db.material.MaterialRecord
 import android.widget.TextView
-import be.heh.projet_henquin.db.material.Material
 import be.heh.projet_henquin.materialPage.AddMaterial
 import be.heh.projet_henquin.materialPage.MaterialDetail
 import be.heh.projet_henquin.materialPage.MaterialListAdapter
 import be.heh.projet_henquin.materialPage.ScanMaterial
-import kotlinx.android.synthetic.main.materialdetail.*
-import kotlinx.android.synthetic.main.materialdetail.view.*
+import be.heh.projet_henquin.userPage.UserList
 
 
-class Main: Activity() {
-    private var userMailTextView  : TextView ?=null
-    private var userListButton : Button ?= null
-    private var user : UserRecord ?= null
-    private var db:AppDatabase?=null
-    private var userDao: UserDao?=null
-    private var materialDao : MaterialDao?= null
-    private var materialList : List<MaterialRecord>?= null
-    private var linearLayout : LinearLayout ?= null
+class Main : Activity() {
+    private var userMailTextView: TextView? = null
+    private var userListButton: Button? = null
+    private var user: UserRecord? = null
+    private var db: AppDatabase? = null
+    private var userDao: UserDao? = null
+    private var materialDao: MaterialDao? = null
+    private var materialList: List<MaterialRecord>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +44,13 @@ class Main: Activity() {
 
         Log.i("User information", this.user.toString())
         //User list for admin
-        if(user?.isAdmin == true){
-            val params: LinearLayout.LayoutParams = userListButton!!.getLayoutParams() as LinearLayout.LayoutParams
-            userListButton!!.setLayoutParams(params)
+        if (user?.isAdmin == true) {
+            val params: LinearLayout.LayoutParams =
+                userListButton!!.layoutParams as LinearLayout.LayoutParams
+            userListButton!!.layoutParams = params
             params.width = 470
-            userListButton!!.setVisibility(View.VISIBLE)
-            userListButton!!.setClickable(true)
+            userListButton!!.visibility = View.VISIBLE
+            userListButton!!.isClickable = true
         }
 
         materialList = materialDao?.getAll()
@@ -60,20 +58,22 @@ class Main: Activity() {
 
     }
 
-    fun toAddMaterial(v : View) {
+    fun toAddMaterial(v: View) {
         val toAddMaterial = AddMaterial.addMaterialIntent(this, INTENT_USER_MAIL.toString())
         startActivity(toAddMaterial)
     }
-    fun toScanMaterial(v : View) {
+
+    fun toScanMaterial(v: View) {
         val toScanMaterial = ScanMaterial.newIntent(this, INTENT_USER_MAIL.toString())
         startActivity(toScanMaterial)
     }
-    fun toUserList(v : View) {
+
+    fun toUserList(v: View) {
         val toUserList = Intent(this, UserList::class.java)
         startActivity(toUserList)
     }
 
-    fun dataBaseConstruct(){
+    fun dataBaseConstruct() {
         this.db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "MyDataBase"
@@ -82,15 +82,18 @@ class Main: Activity() {
         this.materialDao = db?.materialDao()
 
     }
-    fun materialView(materialRecordList:List<MaterialRecord>){
+
+    fun materialView(materialRecordList: List<MaterialRecord>) {
         var mListView = findViewById<ListView>(R.id.listMaterialItem)
         mListView.isClickable = true
-        mListView.adapter = MaterialListAdapter(this, materialRecordList as ArrayList<MaterialRecord>)
+        mListView.adapter =
+            MaterialListAdapter(this, materialRecordList as ArrayList<MaterialRecord>)
         mListView.setOnItemClickListener { adapterView, view, position, l ->
-            var selectedItem : MaterialRecord ?= null
+            var selectedItem: MaterialRecord? = null
             selectedItem = mListView.adapter.getItem(position) as MaterialRecord
 
-            val toMaterialDetail = user?.let { MaterialDetail.newIntent(this, selectedItem.ref, it.email) }
+            val toMaterialDetail =
+                user?.let { MaterialDetail.newIntent(this, selectedItem.ref, it.email) }
             startActivity(toMaterialDetail)
 
         }
@@ -98,7 +101,7 @@ class Main: Activity() {
     }
 
     companion object {
-        private var INTENT_USER_MAIL : String ?= null
+        private var INTENT_USER_MAIL: String? = null
         fun newIntent(context: Context, userMail: String): Intent {
             val intent = Intent(context, Main::class.java)
             intent.putExtra(INTENT_USER_MAIL, userMail)

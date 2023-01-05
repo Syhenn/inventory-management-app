@@ -6,19 +6,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.room.Room
 import be.heh.projet_henquin.Main
 import be.heh.projet_henquin.R
 import be.heh.projet_henquin.db.AppDatabase
-import be.heh.projet_henquin.db.material.Material
 import be.heh.projet_henquin.db.material.MaterialDao
 import be.heh.projet_henquin.db.material.MaterialRecord
 import be.heh.projet_henquin.db.user.UserDao
@@ -26,29 +21,27 @@ import be.heh.projet_henquin.db.user.UserRecord
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
-import kotlinx.android.synthetic.main.main.*
-import kotlinx.android.synthetic.main.materialdetail.*
 import java.io.ByteArrayOutputStream
 
 class MaterialDetail : Activity() {
-    private var textRef: TextView?=null
-    private var textModel: TextView?=null
-    private var textType: TextView?=null
-    private var textLink: TextView?=null
-    private var typeEdit : EditText?=null
-    private var modelEdit : EditText?=null
-    private var refEdit : EditText?=null
-    private var linkEdit : EditText?=null
-    private var modifyButton : Button?=null
-    private var deleteButton : Button?=null
-    private var validateButton : Button?=null
-    private var textIsAvailable: TextView?=null
-    private var qrCodeImg: ImageView?=null
-    private var db: AppDatabase?=null
-    private var materialDao : MaterialDao?= null
-    private var userDao: UserDao?=null
-    private var material : MaterialRecord?= null
-    private var user : UserRecord?=null
+    private var textRef: TextView? = null
+    private var textModel: TextView? = null
+    private var textType: TextView? = null
+    private var textLink: TextView? = null
+    private var typeEdit: EditText? = null
+    private var modelEdit: EditText? = null
+    private var refEdit: EditText? = null
+    private var linkEdit: EditText? = null
+    private var modifyButton: Button? = null
+    private var deleteButton: Button? = null
+    private var validateButton: Button? = null
+    private var textIsAvailable: TextView? = null
+    private var qrCodeImg: ImageView? = null
+    private var db: AppDatabase? = null
+    private var materialDao: MaterialDao? = null
+    private var userDao: UserDao? = null
+    private var material: MaterialRecord? = null
+    private var user: UserRecord? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +50,15 @@ class MaterialDetail : Activity() {
         textModel = findViewById<View>(R.id.text_model) as TextView
         textType = findViewById<View>(R.id.text_type) as TextView
         textLink = findViewById<View>(R.id.text_link) as TextView
-        qrCodeImg = findViewById(R.id.image_view_qr_code) as ImageView
-        modifyButton = findViewById(R.id.modifyButtonId) as Button
-        deleteButton = findViewById(R.id.deleteButtonId) as Button
-        validateButton = findViewById(R.id.validateButtonId) as Button
+        qrCodeImg = findViewById<ImageView>(R.id.image_view_qr_code)
+        modifyButton = findViewById<Button>(R.id.modifyButtonId)
+        deleteButton = findViewById<Button>(R.id.deleteButtonId)
+        validateButton = findViewById<Button>(R.id.validateButtonId)
         textIsAvailable = findViewById<View>(R.id.text_isAvailable) as TextView
-        typeEdit = findViewById(R.id.type) as EditText
-        modelEdit = findViewById(R.id.model) as EditText
-        refEdit = findViewById(R.id.ref) as EditText
-        linkEdit = findViewById(R.id.link) as EditText
+        typeEdit = findViewById<EditText>(R.id.type)
+        modelEdit = findViewById<EditText>(R.id.model)
+        refEdit = findViewById<EditText>(R.id.ref)
+        linkEdit = findViewById<EditText>(R.id.link)
 
         this.db = Room.databaseBuilder(
             applicationContext,
@@ -76,58 +69,61 @@ class MaterialDetail : Activity() {
         this.user = intent_mail?.let { this.userDao?.findByEmail(it) }
         material = intent_ref?.let { this.materialDao?.getByRef(it) }
 
-        textRef!!.setText(material?.ref )
-        textModel!!.setText(material?.model )
-        textType!!.setText(material?.type )
-        textLink!!.setText(material?.link )
-        if(material?.isAvailable == true){
-            textIsAvailable!!.setText("Available")
+        textRef!!.text = material?.ref
+        textModel!!.text = material?.model
+        textType!!.text = material?.type
+        textLink!!.text = material?.link
+        if (material?.isAvailable == true) {
+            textIsAvailable!!.text = "Disponible"
             textIsAvailable!!.setTextColor(Color.GREEN)
         } else {
-            textIsAvailable!!.setText("Not Available")
+            textIsAvailable!!.text = "Indisponible"
             textIsAvailable!!.setTextColor(Color.RED)
         }
 
-        textIsAvailable!!.setText(material?.isAvailable.toString())
-        val bitmap = material?.qrCode?.let { BitmapFactory.decodeByteArray(it  , 0, it.size) }
+        textIsAvailable!!.text = material?.isAvailable.toString()
+        val bitmap = material?.qrCode?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
         qrCodeImg!!.setImageBitmap(bitmap)
 
-        if(user?.isAdmin == true){
-            val params: LinearLayout.LayoutParams = modifyButton!!.getLayoutParams() as LinearLayout.LayoutParams
-            modifyButton!!.setLayoutParams(params)
-            deleteButton!!.setLayoutParams(params)
+        if (user?.isAdmin == true) {
+            val params: LinearLayout.LayoutParams =
+                modifyButton!!.layoutParams as LinearLayout.LayoutParams
+            modifyButton!!.layoutParams = params
+            deleteButton!!.layoutParams = params
             params.width = 470
-            modifyButton!!.setVisibility(View.VISIBLE)
-            modifyButton!!.setClickable(true)
-            deleteButton!!.setVisibility(View.VISIBLE)
-            deleteButton!!.setClickable(true)
+            modifyButton!!.visibility = View.VISIBLE
+            modifyButton!!.isClickable = true
+            deleteButton!!.visibility = View.VISIBLE
+            deleteButton!!.isClickable = true
         }
 
     }
-    fun modifyButton(v : View){
+
+    fun modifyButton(v: View) {
         typeEdit?.setText(textType!!.text)
-        typeEdit?.setVisibility(View.VISIBLE)
-        textType?.setVisibility(View.GONE)
+        typeEdit?.visibility = View.VISIBLE
+        textType?.visibility = View.GONE
         modelEdit?.setText(textModel!!.text)
-        modelEdit?.setVisibility(View.VISIBLE)
-        textModel?.setVisibility(View.GONE)
+        modelEdit?.visibility = View.VISIBLE
+        textModel?.visibility = View.GONE
         refEdit?.setText(textRef!!.text)
-        refEdit?.setVisibility(View.VISIBLE)
-        textRef?.setVisibility(View.GONE)
+        refEdit?.visibility = View.VISIBLE
+        textRef?.visibility = View.GONE
         linkEdit?.setText(textLink!!.text)
-        linkEdit?.setVisibility(View.VISIBLE)
-        textLink?.setVisibility(View.GONE)
-        textIsAvailable?.setVisibility(View.GONE)
-        modifyButton?.setVisibility(View.GONE)
-        val params: LinearLayout.LayoutParams = validateButton!!.getLayoutParams() as LinearLayout.LayoutParams
-        validateButton!!.setLayoutParams(params)
+        linkEdit?.visibility = View.VISIBLE
+        textLink?.visibility = View.GONE
+        textIsAvailable?.visibility = View.GONE
+        modifyButton?.visibility = View.GONE
+        val params: LinearLayout.LayoutParams =
+            validateButton!!.layoutParams as LinearLayout.LayoutParams
+        validateButton!!.layoutParams = params
         params.width = 470
-        validateButton!!.setVisibility(View.VISIBLE)
-        validateButton!!.setClickable(true)
+        validateButton!!.visibility = View.VISIBLE
+        validateButton!!.isClickable = true
 
     }
 
-    fun validateButton(v : View){
+    fun validateButton(v: View) {
 
         val materialType = this.typeEdit?.text.toString()
         val materialModel = this.modelEdit?.text.toString()
@@ -137,19 +133,32 @@ class MaterialDetail : Activity() {
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
         val imageBytes = outputStream.toByteArray()
-        var materialUpdated = material?.let { MaterialRecord(it.id,materialType, materialModel, materialRef, materialLink, imageBytes, material!!.isAvailable, material!!.createdBy) }
+        var materialUpdated = material?.let {
+            MaterialRecord(
+                it.id,
+                materialType,
+                materialModel,
+                materialRef,
+                materialLink,
+                imageBytes,
+                material!!.isAvailable,
+                material!!.createdBy
+            )
+        }
         materialUpdated?.let { this.materialDao?.updateMaterial(it) }
-        Toast.makeText(this, "Material modified with success.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Materiel modifié avec succès.", Toast.LENGTH_LONG).show()
         val intent = Main.newIntent(this, intent_mail.toString())
         startActivity(intent)
     }
-    fun image_view_qr_code(ref : String): Bitmap {
+
+    fun image_view_qr_code(ref: String): Bitmap {
         val data = ref
         val qrCodeWriter = QRCodeWriter()
         val bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 400, 400)
         val bitmap = toBitmap(bitMatrix)
         return bitmap
     }
+
     private fun toBitmap(matrix: BitMatrix): Bitmap {
         val height = matrix.height
         val width = matrix.width
@@ -164,20 +173,22 @@ class MaterialDetail : Activity() {
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
     }
-    fun deleteButton(v : View) {
+
+    fun deleteButton(v: View) {
         material?.let { this.materialDao?.deleteMaterial(it) }
         val toMain = Main.newIntent(this, intent_mail.toString())
         startActivity(toMain)
     }
 
-    fun toLink(v : View){
+    fun toLink(v: View) {
         val link = Intent(Intent.ACTION_VIEW, Uri.parse(textLink?.text.toString()))
         startActivity(link)
     }
+
     companion object {
 
-        private var intent_ref : String ?= null
-        private var intent_mail : String ?= null
+        private var intent_ref: String? = null
+        private var intent_mail: String? = null
 
         fun newIntent(context: Context, ref: String, userMail: String): Intent {
             val intent = Intent(context, MaterialDetail::class.java)
